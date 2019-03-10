@@ -1,8 +1,4 @@
 # -*- coding: utf8 -*-
-#
-# Ant Algorithm Demonstration
-#
-# Задача коммивожера
 # Алгоритм муравья
 from math import sqrt
 from random import random
@@ -11,13 +7,13 @@ import numpy.random as rand
 
 MAX_CITIES = 20
 MAX_DISTANCE = 50
-MAX_TIME = 250 * MAX_CITIES
+MAX_TIME = 150 * MAX_CITIES
 INIT_PHEROMONE = 1.0 / MAX_CITIES
 
-MAX_ANTS = MAX_CITIES * MAX_CITIES
-ALPHA = 1  # вес фермента
-BETA = 3  # коэффициент эвристики, влияние априорных знаний(1/d, где d - растояние)
-RHO = .5  # Интенсивность. Коф. испарение равен 1 - RHO. По результатам тестов лучше использовать >= 0.5
+MAX_ANTS = MAX_CITIES * 25
+ALPHA = 3  # вес фермента
+BETA = 9  # коэффициент эвристики, влияние априорных знаний(1/d, где d - растояние)
+RHO = .8  # Интенсивность. Коф. испарение равен 1 - RHO. По результатам тестов лучше использовать >= 0.5
 QVAL = 100  # Кол. феромонов на один проход
 
 
@@ -76,6 +72,11 @@ BEST_ANT = None
 
 def init():
     global DISTANCE, PHEROMONE, ANTS
+
+    MAX_TIME = 200 * MAX_CITIES
+    INIT_PHEROMONE = 1.0 / MAX_CITIES
+
+    MAX_ANTS = MAX_CITIES * MAX_CITIES
 
     for i in range(MAX_CITIES):
         PHEROMONE.append([INIT_PHEROMONE] * MAX_CITIES)
@@ -173,6 +174,17 @@ def restart_ants():
         to = to % MAX_CITIES
 
 if __name__ == '__main__':
+    # print("Введите массив значений 20 на 20:")
+    for i in range(0,MAX_CITIES):
+        DISTANCE.append([int(j) for j in input().split()])
+        if i==0:
+            MAX_CITIES=len(DISTANCE[0])
+        if i>=MAX_CITIES-1:
+            break
+    # print("Успешно! Данные получены!")
+    # print("Полученный массив значений:")
+    # print(DISTANCE)
+
 # Генерация значений для тестирования
     # b=np.random.randint(1, 50, size=(20, 20))
     # i=range(0, 20)
@@ -180,26 +192,18 @@ if __name__ == '__main__':
     #     b[x][x]=0
     # print (b)
 # Ввод значений массива
-#    print("Введите массив значений 20 на 20:")
-    n=20  #кол-во строк, которые необходимо ввети
-    for i in range(n):
-        DISTANCE.append([int(j) for j in input().split()])
-#    print("Успешно! Данные получены!")
-    # print("Полученный массив значений:")
-    # print (a)
-
     init()
     cur_time = 0
     while cur_time < MAX_TIME:
         cur_time += 1
-        if cur_time % 100 == 0:
-            print ('time:', cur_time, 'of', MAX_TIME)
+        # if cur_time % 100 == 0:
+        #     print ('time:', cur_time, 'of', MAX_TIME)
 
         if simulate_ants() == 0:
             update_trails()
             cur_time != MAX_TIME and restart_ants()
 
-    # print ("Наилучший путь:")
-    # print(BEST_ANT.path)
-    # print ("Пройденное расстояние:")
-    print(BEST_ANT.tour_length)
+#    print ("Наилучший путь:")
+ #   print(BEST_ANT.path)
+ #    print ("Расстояние для наилучшего пути:")
+    print(int(BEST_ANT.tour_length))
