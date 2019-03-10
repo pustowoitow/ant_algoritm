@@ -11,12 +11,12 @@ import numpy.random as rand
 
 MAX_CITIES = 20
 MAX_DISTANCE = 50
-MAX_TIME = 100 * MAX_CITIES
+MAX_TIME = 250 * MAX_CITIES
 INIT_PHEROMONE = 1.0 / MAX_CITIES
 
 MAX_ANTS = MAX_CITIES * MAX_CITIES
-ALPHA = 3  # вес фермента
-BETA = 5  # коэффициент эвристики, влияние априорных знаний(1/d, где d - растояние)
+ALPHA = 1  # вес фермента
+BETA = 3  # коэффициент эвристики, влияние априорных знаний(1/d, где d - растояние)
 RHO = .5  # Интенсивность. Коф. испарение равен 1 - RHO. По результатам тестов лучше использовать >= 0.5
 QVAL = 100  # Кол. феромонов на один проход
 
@@ -180,11 +180,11 @@ if __name__ == '__main__':
     #     b[x][x]=0
     # print (b)
 # Ввод значений массива
-    print("Введите массив значений 20 на 20:")
+#    print("Введите массив значений 20 на 20:")
     n=20  #кол-во строк, которые необходимо ввети
     for i in range(n):
         DISTANCE.append([int(j) for j in input().split()])
-    print("Успешно! Данные получены!")
+#    print("Успешно! Данные получены!")
     # print("Полученный массив значений:")
     # print (a)
 
@@ -199,7 +199,7 @@ if __name__ == '__main__':
             update_trails()
             cur_time != MAX_TIME and restart_ants()
 
-    print ("Наилучший путь:")
-    print(BEST_ANT.path)
-    print ("Пройденное расстояние:")
+    # print ("Наилучший путь:")
+    # print(BEST_ANT.path)
+    # print ("Пройденное расстояние:")
     print(BEST_ANT.tour_length)
